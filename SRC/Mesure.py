@@ -1,4 +1,4 @@
-#CACA TEST
+
 import serial 
 import time 
 import matplotlib.pyplot as plt
@@ -8,6 +8,9 @@ import numpy as np
 import serial
 import serial.tools.list_ports
 from pathlib import Path
+
+def test() :
+   return print(test)
 
 def connexion_port(br=115200, portIN=''):
     # Si port fourni manuellement
