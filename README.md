@@ -1,9 +1,5 @@
 READ ME
-bonjour comment ca va
-ptn ca marche pas c trop chiant
-he jspr ca va marcher sinon je t bz
 Description:
-
 Ce projet permet de piloter un appareil de mesure de température et de voltage à travers un menu interactif. 
 Le code source (fichier SRC) est organisé en trois dossiers principaux (Mesures, consignes et calibration) et est codé en python. 
 
