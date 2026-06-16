@@ -5,5 +5,9 @@ Le code source (fichier SRC) est organisé en trois dossiers principaux (Mesures
 
 Lancer le programme:
 Pour cela il faut ouvrir le fichier source dans le terminal (de l'ordinateur), celui ci se trouve dans le fichier maso.
-Une fois le terminal lancé, taper "python consigne.py" afin de lancer le programme. 
+Une fois le terminal lancé,
+windows :
+ taper "python consigne.py" afin de lancer le programme. 
+linux :
+ taper "python3 consigne.py" afin de lancer le programme. 
 
