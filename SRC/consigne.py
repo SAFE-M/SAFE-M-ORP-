@@ -11,7 +11,7 @@ import time
 
 BASE = Path(__file__).parent.parent
 
-chemin = BASE/"Data"/"données (T,V)"
+chemin = BASE/"Data"/"data_(T,V)"
 menu = """
 Bienvenue dans le programme de calibration et de mesure de potentiel ORP !
 ====================================

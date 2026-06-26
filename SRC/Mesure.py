@@ -11,6 +11,21 @@ from pathlib import Path
 
 
 def connexion_port(br=115200, portIN=''):
+    """_summary_
+Établit la connexion série avec l'Arduino. Si un port est fourni manuellement,
+tente de s'y connecter directement. Sinon, détecte automatiquement le port
+Arduino parmi les ports disponibles (Windows et Linux), en cherchant les
+identifiants caractéristiques dans le nom du port.
+
+Args:
+    br (int): Baudrate de la connexion série. Par défaut 115200.
+    portIN (str): Nom du port série à utiliser. Si vide, détection automatique.
+
+Returns:
+    tuple[str, serial.Serial | str]:
+        - portIN : nom du port détecté ou fourni (ex. 'COM6', '/dev/ttyACM0').
+        - s : objet serial.Serial connecté, ou la chaîne 'error' en cas d'échec.
+"""
     # Si port fourni manuellement
     if portIN:
         try:
@@ -211,10 +226,26 @@ def data_live(s):
     return T,V,fig
 
 def enregistrement_csv (T,V_real,moy = None,sigma=None) :
+    """_summary_
+Enregistre les données de température et de potentiel calibré dans un fichier
+CSV horodaté, accompagnées de la moyenne et de l'écart-type des tensions.
+Le fichier est sauvegardé dans le dossier Data/data_(T,V)/.
+
+Args:
+    T (list[float]): Liste des températures mesurées (en °C).
+    V_real (list[float]): Liste des potentiels calibrés (en mV).
+    moy (float, optional): Moyenne des tensions calibrées. Calculée automatiquement
+        si non fournie.
+    sigma (float, optional): Écart-type des tensions calibrées. Calculé
+        automatiquement si non fourni.
+
+Returns:
+    str: Message de confirmation d'enregistrement.
+"""
     BASE = Path(__file__).parent.parent
     now = datetime.datetime.now()
     nom_fichier = now.strftime("Mesure Température et Voltage %d %B, %Hh%M.csv")
-    chemin = BASE/"Data"/'données (T,V)'/nom_fichier      
+    chemin = BASE/"Data"/'data_(T,V)'/nom_fichier      
     n = min(len(T), len(V_real))
     if moy is None:
         moy = np.mean(V_real[:n])
@@ -225,10 +256,20 @@ def enregistrement_csv (T,V_real,moy = None,sigma=None) :
         np.savetxt(f,resultat, delimiter=',', fmt='%.2f',header=f'Donnees Temperature / Potentiel(calibré),pour V :  écart type ={sigma} et moyenne = {moy}')
     return 'Le fichier csv a bien été enregistré.'
 
-def enregistrement_png (figure) :
+def enregistrement_pdf (figure) :
+    """_summary_
+Enregistre le graphique de température et de potentiel sous forme d'image PNG
+horodatée dans le dossier Data/data_figures/data_figures_mesures/.
+
+Args:
+    figure (matplotlib.figure.Figure): Figure matplotlib à sauvegarder.
+
+Returns:
+    str: Message de confirmation d'enregistrement.
+"""
     BASE = Path(__file__).parent.parent
     now = datetime.datetime.now()
-    nom_fichier = now.strftime("Graphique Température et Potentiel %d %B, %Hh%M.png")
+    nom_fichier = now.strftime("Graphique Température et Potentiel %d %B, %Hh%M.pdf")
     chemin = BASE/"Data"/'data_figures'/'data_figures_mesures'/nom_fichier      
     figure.savefig(chemin,bbox_inches='tight')
     return 'Le fichier png a bien été enregistré.'

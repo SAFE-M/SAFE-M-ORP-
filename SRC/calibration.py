@@ -86,6 +86,23 @@ def V_real_f (V,C0):
 #Enregistrement des données de calibration :
 
 def enregistrement_cal (C0, tendance = None,nb_etalons=None) :
+    """_summary_
+Enregistre les paramètres de calibration dans un fichier CSV horodaté.
+Selon le nombre d'étalons, le fichier contient soit uniquement C0 (calibration
+à 1 étalon ou d'usine), soit C0, la pente et l'intercept de la droite de
+tendance (calibration à 2 étalons). Le fichier est sauvegardé dans le dossier
+Data/data_calibration/.
+
+Args:
+    C0 (float): Terme correctif issu de la calibration (en mV).
+    tendance (np.poly1d, optional): Objet polynôme contenant la pente et
+        l'intercept de la droite d'étalonnage. None si calibration à 1 étalon.
+    nb_etalons (int, optional): Nombre d'étalons utilisés (1 ou 2). None si
+        calibration d'usine.
+
+Returns:
+    None
+"""
     BASE = Path(__file__).parent.parent     
     now = datetime.datetime.now()
     if nb_etalons == 1:
@@ -94,7 +111,7 @@ def enregistrement_cal (C0, tendance = None,nb_etalons=None) :
         nom_fichier = now.strftime(f"Calibration à {nb_etalons} étalons %d %B, %Hh%M.csv")
     elif nb_etalons is None :
         nom_fichier = now.strftime(f"Calibration d'usine %d %B, %Hh%M.csv")
-    chemin = BASE/"Data"/"données calibration"/nom_fichier      
+    chemin = BASE/"Data"/"data_calibration"/nom_fichier      
     if tendance is None :
         resultat = np.atleast_2d(C0) #  garantit un array 2D pour savetxt
         with open(chemin, 'w', newline='', encoding='utf-8') as f:  #encodage explicite
@@ -105,10 +122,20 @@ def enregistrement_cal (C0, tendance = None,nb_etalons=None) :
         with open(chemin, 'w', newline='', encoding='utf-8') as f:  #encodage explicite
             np.savetxt(f, resultat, fmt='%.2f', header=f"Donnees Calibration à {nb_etalons},tendance : E = {slope:.2f}*V + {intercept:.2f}") 
 
-def enregistrement_cal2_png (fig) :
+def enregistrement_cal2_pdf (fig) :
+    """_summary_
+Enregistre le graphique de calibration à 2 étalons sous forme d'image PNG
+horodatée dans le dossier Data/data_figures/data_figures_calibration/.
+
+Args:
+    fig (matplotlib.figure.Figure): Figure matplotlib à sauvegarder.
+
+Returns:
+    str: Message de confirmation d'enregistrement.
+"""
     BASE = Path(__file__).parent.parent
     now = datetime.datetime.now()
-    nom_fichier = now.strftime("Graphique Calibration 2 étalons %d %B, %Hh%M.png")
+    nom_fichier = now.strftime("Graphique Calibration 2 étalons %d %B, %Hh%M.pdf")
     chemin = BASE/"Data"/'data_figures'/'data_figures_calibration'/nom_fichier      
     fig.savefig(chemin,bbox_inches='tight')
     return 'Le fichier png a bien été enregistré.'
@@ -116,6 +143,41 @@ def enregistrement_cal2_png (fig) :
 # Calibration à 2 étalons :
 
 def calibration_2_etalons(s, E1=None, E2=None,V1=None, V2=None) :
+    """_summary_
+Effectue une calibration à deux étalons par régression linéaire.
+Demande à l'utilisateur les potentiels des deux solutions étalons, acquiert
+les mesures sur chacune d'elles, puis calcule la droite de tendance par
+régression linéaire (scipy.stats.linregress) entre les tensions moyennes
+mesurées et les potentiels théoriques. Avertit si le R² est inférieur à 0.9.
+
+Remarque : avec seulement 2 points, R² vaut toujours 1 par construction
+mathématique — l'avertissement R² < 0.9 ne peut donc jamais se déclencher.
+
+Args:
+    s (serial.Serial): Objet de connexion série avec l'Arduino.
+    E1 (float, optional): Potentiel théorique de la solution étalon 1 (en mV).
+        Demandé à l'utilisateur si non fourni.
+    E2 (float, optional): Potentiel théorique de la solution étalon 2 (en mV).
+        Demandé à l'utilisateur si non fourni.
+    V1 (list[float], optional): Tensions brutes mesurées sur l'étalon 1.
+        Acquises via mes.data() si non fournies.
+    V2 (list[float], optional): Tensions brutes mesurées sur l'étalon 2.
+        Acquises via mes.data() si non fournies.
+    V_real1 : tension convertit en mV 
+        Acquise via V1
+    V_real2 : tension convertit en mV
+        Acquise via V2
+
+Returns:
+    tuple: (C0, V1_moy, V2_moy, tendance, r_squared, E1, E2)
+        - C0 (float): Intercept de la droite, utilisé comme offset de calibration (en mV).
+        - V1_moy (float): Tension moyenne mesurée sur l'étalon 1 (en mV).
+        - V2_moy (float): Tension moyenne mesurée sur l'étalon 2 (en mV).
+        - tendance (np.poly1d): Droite de calibration sous forme de polynôme.
+        - r_squared (float): Coefficient de détermination R² de la régression.
+        - E1 (float): Potentiel théorique de l'étalon 1 (en mV).
+        - E2 (float): Potentiel théorique de l'étalon 2 (en mV).
+"""
     if E1 is None and V1 is None:
         E1 = float(input('Potentiel de la solution étalon 1 (mV) : '))
         input('Placer votre sonde dans la solution étalon 1, quand vous êtes prêt, écrivez OK ===>')
@@ -131,8 +193,10 @@ def calibration_2_etalons(s, E1=None, E2=None,V1=None, V2=None) :
 
     V1_moy = np.mean(V1)
     V2_moy = np.mean(V2)
+    V1_real = (2 - V1_moy) * 1000
+    V2_real = (2- V2_moy) * 1000
     
-    tendance = slope, intercept, r_value, p_value, std_err = stats.linregress([V1_moy,V2_moy],[E1,E2])
+    tendance = slope, intercept, r_value, p_value, std_err = stats.linregress([V1_real,V2_real],[E1,E2])
     r_squared = (r_value)**2
     C0 = intercept 
     tendance = np.poly1d([slope, intercept])
@@ -146,6 +210,23 @@ def calibration_2_etalons(s, E1=None, E2=None,V1=None, V2=None) :
 
 #Graphique de la tendance de l'étalonnage. 
 def graphe_cal2(V1_moy, V2_moy, tendance, r_squared, E1, E2):
+    """_summary_
+Affiche le graphique de la droite de calibration à 2 étalons avec les points
+étalons et l'équation de la droite de régression. L'axe X représente la tension
+mesurée (en mV) et l'axe Y le potentiel théorique (en mV).
+
+Args:
+    V1_moy (float): Tension moyenne mesurée sur la solution étalon 1 (en mV).
+    V2_moy (float): Tension moyenne mesurée sur la solution étalon 2 (en mV).
+    tendance (np.poly1d): Objet polynôme contenant la pente et l'intercept de
+        la droite d'étalonnage.
+    r_squared (float): Coefficient de détermination R² de la régression linéaire.
+    E1 (float): Potentiel théorique de la solution étalon 1 (en mV).
+    E2 (float): Potentiel théorique de la solution étalon 2 (en mV).
+
+Returns:
+    matplotlib.figure.Figure: Figure matplotlib du graphique de calibration.
+"""
     slope, intercept = tendance.coeffs
     fig,ax = plt.subplots()
     # Axe X : de part et d'autre des deux mesures pour voir la droite
