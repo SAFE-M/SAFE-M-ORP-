@@ -124,7 +124,7 @@ Returns:
 
 def enregistrement_cal2_pdf (fig) :
     """_summary_
-Enregistre le graphique de calibration à 2 étalons sous forme d'image PNG
+Enregistre le graphique de calibration à 2 étalons sous forme d'image PDF
 horodatée dans le dossier Data/data_figures/data_figures_calibration/.
 
 Args:
@@ -138,7 +138,7 @@ Returns:
     nom_fichier = now.strftime("Graphique Calibration 2 étalons %d %B, %Hh%M.pdf")
     chemin = BASE/"Data"/'data_figures'/'data_figures_calibration'/nom_fichier      
     fig.savefig(chemin,bbox_inches='tight')
-    return 'Le fichier png a bien été enregistré.'
+    return 'Le fichier pdf a bien été enregistré.'
 # =======================================================================================================
 # Calibration à 2 étalons :
 
@@ -156,17 +156,13 @@ mathématique — l'avertissement R² < 0.9 ne peut donc jamais se déclencher.
 Args:
     s (serial.Serial): Objet de connexion série avec l'Arduino.
     E1 (float, optional): Potentiel théorique de la solution étalon 1 (en mV).
-        Demandé à l'utilisateur si non fourni.
     E2 (float, optional): Potentiel théorique de la solution étalon 2 (en mV).
-        Demandé à l'utilisateur si non fourni.
     V1 (list[float], optional): Tensions brutes mesurées sur l'étalon 1.
-        Acquises via mes.data() si non fournies.
     V2 (list[float], optional): Tensions brutes mesurées sur l'étalon 2.
-        Acquises via mes.data() si non fournies.
     V_real1 : tension convertit en mV 
-        Acquise via V1
     V_real2 : tension convertit en mV
-        Acquise via V2
+E1 et E2 sont demandé à l'utilisateur si non fournis, V1 et V2 sont acquises via mes.data() si non fournies
+V_real1 et V_real2 sont acquise via V1 et V2
 
 Returns:
     tuple: (C0, V1_moy, V2_moy, tendance, r_squared, E1, E2)
@@ -193,61 +189,57 @@ Returns:
 
     V1_moy = np.mean(V1)
     V2_moy = np.mean(V2)
+
+    # Conversion en mV 
     V1_real = (2 - V1_moy) * 1000
-    V2_real = (2- V2_moy) * 1000
-    
-    tendance = slope, intercept, r_value, p_value, std_err = stats.linregress([V1_real,V2_real],[E1,E2])
-    r_squared = (r_value)**2
-    C0 = intercept 
-    tendance = np.poly1d([slope, intercept])
-    if r_squared <= 0.9 :
-        print(f"R^2 ={r_squared},la courbe d'étalonnage n'est pas très précise, il est préférable de recommencer")
-    else : 
-        print(f"R^2 = {r_squared}, la coure d'étalonnage est précise, on peut l'utiliser pour calibrer la sonde.")
-    print(f"L'offset moyen est de C0 = {C0:.2f} mV")
-    print(f"L'équation de la droite est y= {slope:.2f}*x + {intercept:.2f}")
-    return C0,V1_moy, V2_moy, tendance,r_squared,E1,E2
+    V2_real = (2 - V2_moy) * 1000
+    a = (E2 - E1)/ (V2_real-V1_real)
+    C0 = E1 -a*V1_real
+    tendance   = np.poly1d([a,C0])
+    print(f'pente = {a}')
+    print(f'C0 ={C0}')
+    print(f'Équation : E = {a:.4f} * V_real + {C0:.2f}')
+    print(V1_real)
+    print(V2_real)
+    return a,C0,E1,E2,V1_real,V2_real,tendance
+
 
 #Graphique de la tendance de l'étalonnage. 
-def graphe_cal2(V1_moy, V2_moy, tendance, r_squared, E1, E2):
-    """_summary_
-Affiche le graphique de la droite de calibration à 2 étalons avec les points
-étalons et l'équation de la droite de régression. L'axe X représente la tension
-mesurée (en mV) et l'axe Y le potentiel théorique (en mV).
+def graphe_cal2(tendance,a, C0, E1, E2, V1_real,V2_real):
+    """__summary__
+    Affiche le graphique de la droite de calibration à 2 étalons.
+    Trace la droite de calibration E = a * V_real + C0 ainsi que les deux points
+    étalons, avec l'équation de la droite en légende.
 
-Args:
-    V1_moy (float): Tension moyenne mesurée sur la solution étalon 1 (en mV).
-    V2_moy (float): Tension moyenne mesurée sur la solution étalon 2 (en mV).
-    tendance (np.poly1d): Objet polynôme contenant la pente et l'intercept de
-        la droite d'étalonnage.
-    r_squared (float): Coefficient de détermination R² de la régression linéaire.
-    E1 (float): Potentiel théorique de la solution étalon 1 (en mV).
-    E2 (float): Potentiel théorique de la solution étalon 2 (en mV).
+    Args:
+        tendance (np.poly1d): Droite de calibration sous forme de polynôme,
+            construite à partir de a et C0 via np.poly1d([a, C0]).
+        a (float): Pente de la droite de calibration (sans unité, idéalement ≈ 1).
+        C0 (float): Intercept de la droite de calibration (en mV).
+        E1 (float): Potentiel théorique de la solution étalon 1 (en mV).
+        E2 (float): Potentiel théorique de la solution étalon 2 (en mV).
+        V1_real (float): Tension mesurée convertie de l'étalon 1 (en mV),
+            obtenue via (2 - V1_moy) * 1000.
+        V2_real (float): Tension mesurée convertie de l'étalon 2 (en mV),
+            obtenue via (2 - V2_moy) * 1000.
 
-Returns:
-    matplotlib.figure.Figure: Figure matplotlib du graphique de calibration.
-"""
-    slope, intercept = tendance.coeffs
+    Returns:
+        matplotlib.figure.Figure: Figure matplotlib du graphique de calibration.
+    """
     fig,ax = plt.subplots()
     # Axe X : de part et d'autre des deux mesures pour voir la droite
-    x_plot = np.linspace(min(V1_moy, V2_moy) - 20, max(V1_moy, V2_moy) + 20, 100)
-    ax.plot(x_plot, tendance(x_plot),label=f"y = {slope:.2f}·V + {intercept:.2f} | R²={r_squared:.4f}")
-
+    x_plot = np.linspace(min(V1_real, V2_real) - 20, max(V1_real, V2_real) + 20, 100)
+    signe = '+' if C0 >= 0 else '-'
+    ax.plot(x_plot, tendance(x_plot), label=f"E = {a:.2f}·V {signe} {abs(C0):.2f}")
     # Points étalons : x = tension mesurée, y = potentiel théorique
-    ax.scatter([V1_moy, V2_moy], [E1, E2], color='red', zorder=5, label='Étalons')
+    ax.scatter([V1_real, V2_real], [E1, E2], color='red', zorder=5, label='Étalons')
 
     ax.set_xlabel('Tension mesurée V (mV)')
-    ax.set_ylabel('Potentiel théorique E (mV)')
+    ax.set_ylabel('Potentiel réel E (mV)')
     ax.set_title('Courbe de calibration à 2 étalons')
     ax.legend()
     ax.grid()
     plt.show()
     return fig
-
-
-if __name__ == '__main__':
-    portIN,s = mes.connexion_port()
-    C0,V1_moy, V2_moy, tendance,r_squared,E1,E2 = calibration_2_etalons(s)
-    graphe_cal2(V1_moy, V2_moy, tendance, r_squared,E1,E2)
 
 

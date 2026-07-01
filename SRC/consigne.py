@@ -95,8 +95,8 @@ while continuer :
             print("Voici le terme correctif (offset): %4.2f" % (C0))
         
         elif reponse_calibration == '3' :
-            C0,V1_moy, V2_moy, tendance,r_squared,E1,E2 = cal.calibration_2_etalons(s, E1=None,E2=None, V1=None, V2=None)
-            fig =cal.graphe_cal2(V1_moy, V2_moy, tendance, r_squared, E1, E2)
+            C0,V1_real, V2_real, tendance,r_squared,E1,E2 = cal.calibration_2_etalons(s, E1=None,E2=None, V1=None, V2=None)
+            fig = cal.graphe_cal2(tendance,a, C0, E1, E2, V1_real,V2_real)
             print("Voici le terme correctif : %4.2f" % (C0))
         if reponse_calibration == '2' or reponse_calibration =='3' :
             rep = input("Souhaitez-vous sauvegarder les données de calibration ? (yes/no) : ")
@@ -105,7 +105,7 @@ while continuer :
                     cal.enregistrement_cal(C0,nb_etalons=1)
                 elif reponse_calibration == '3' :
                     cal.enregistrement_cal(C0,tendance=tendance, nb_etalons=2)
-                    cal.enregistrement_cal2_png(fig)
+                    cal.enregistrement_cal2_pdf(fig)
          
 
    elif reponse == '2' :      

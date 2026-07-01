@@ -258,7 +258,7 @@ Returns:
 
 def enregistrement_pdf (figure) :
     """_summary_
-Enregistre le graphique de température et de potentiel sous forme d'image PNG
+Enregistre le graphique de température et de potentiel sous forme d'image PDF
 horodatée dans le dossier Data/data_figures/data_figures_mesures/.
 
 Args:
