@@ -4,7 +4,7 @@ Ce projet permet de piloter un appareil de mesure de température et de voltage 
 Le code source (fichier SRC) est organisé en trois dossiers principaux (Mesures, consignes et calibration) et est codé en python. 
 
 Lancer le programme:
-Pour cela il faut ouvrir le fichier source dans le terminal (de l'ordinateur), celui ci se trouve dans le fichier maso.
+Pour cela il faut ouvrir le fichier source dans le terminal (de l'ordinateur), celui ci se trouve dans le fichier SAFE-M-ORP.
 Une fois le terminal lancé,
 windows :
  taper "python consigne.py" afin de lancer le programme. 
