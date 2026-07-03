@@ -2,7 +2,6 @@
 import serial 
 import time 
 import matplotlib.pyplot as plt
-import keyboard
 import datetime
 import numpy as np 
 import serial
@@ -61,39 +60,57 @@ Returns:
     except serial.SerialException as e:
         print(f"Erreur: impossible d'ouvrir {portIN} : {e}")
         return '', 'error'
-    
-def data(s,N=None): 
+
+def data(s, N=None):
     """_summary_
-    Acquiert un nombre fixe de mesures depuis le port série.
-    Demande à l'utilisateur le nombre de mesures souhaitées, puis lit ce nombre
-    de lignes sur le port série. Chaque ligne est décodée et séparée en tension
-    (indice 0) et température (indice 1).
+    Acquiert un nombre fixe de mesures depuis le port série, espacées d'un
+    intervalle de temps connu (time_inter), et renvoie un temps écoulé en
+    secondes pour chaque mesure (plutôt qu'un simple indice d'acquisition).
+
+    Parameters
+    ----------
+    s : serial.Serial
+        Objet Serial ouvert sur lequel lire les mesures.
+    N : int, optional
+        Nombre de mesures à effectuer. Si None, demandé à l'utilisateur.
+    time_inter : float, optional
+        Intervalle de temps (en sec) entre deux lectures. Par défaut 0.08 sec.
 
     Returns:
-        tuple[list[float], list[float]]:
+        tuple[list[float], list[float], list[float]]:
             - T : liste des températures mesurées (en °C).
             - V : liste des tensions mesurées (en V).
+            - t_temps : liste des temps écoulés depuis le début (en sec).
     """
-    T=[]
-    V=[]
-    if N is None :
-        N= int(input('Combien mesure veux-tu faire'))
-    for k in range(N) :
+    time_inter=0.08
+    T = []
+    V = []
+    t_temps = []
+    if N is None:
+        N = int(input('Combien de mesures veux-tu faire ? '))
+
+    t0 = time.time()
+    for k in range(N):
         s.flushInput()
-        time.sleep(0.08)
+        time.sleep(time_inter)
         try:
             line = s.readline().decode()
             a = line.strip("\r\n").split(",")
-            T.append(float(a[1])) #1 a [1]valeurs de la liste et a[0]
+            T.append(float(a[1]))  # a[1] : température, a[0] : tension
             V.append(float(a[0]))
+            t_temps.append(time.time() - t0)
         except:
             print("problème de lecture de données")
-    return T,V
+        
+        print(f'\rMesure {k+1}/{N} ({100*(k+1)//N} %)', end='', flush=True)
+
+    return T, V, t_temps
+
 
 # T,V = data()
 
 
-def Graphe_T_V(x,y):
+def Graphe_T_V(x,y,t_temps):
     """_summary_
     Affiche deux graphiques en nuage de points des tensions mesurées (corrigées en mV) et de températures(°C)
     Crée une nouvelle fenêtre matplotlib intitulée 'Graphique Voltage et Température et trace
@@ -102,14 +119,15 @@ def Graphe_T_V(x,y):
     Args:
         x (list[float]): Liste des températures mesurées à afficher (en °C).
         y (list[float]): Liste des tensions corrigées à afficher (en V ou mV selon calibration).
+        t_temps (list[float]): Liste des temps écoulés depuis le début (en sec).
     """
     fig, (ax1 , ax2)  = plt.subplots(1,2)
-    ax1.plot(y,'o', color='red')
-    ax1.set_xlabel("Nombre de mesure")
-    ax1.set_ylabel("Tension calibré (mV)")
+    ax1.plot(t_temps,y,'o',color='red')
+    ax1.set_xlabel("Temps d'acquisition (s)")
+    ax1.set_ylabel("Potentiel réel (mV)")
 
-    ax2.plot(x,'o', color='blue')
-    ax2.set_xlabel("Nombre de mesure")
+    ax2.plot(t_temps,x,'o', color='blue')
+    ax2.set_xlabel("Temps d'acquisition (s)")
     ax2.set_ylabel("Température (°C)")
     plt.show()
     return fig 
@@ -125,6 +143,8 @@ import time
 def graphe_live(C0, s):
     T = []
     V = []
+    t_T = []   # temps (s) associés à chaque mesure de température
+    t_V = []   # temps (s) associés à chaque mesure de tension (après filtrage)
     stop = False
 
     def on_key(event):
@@ -138,6 +158,8 @@ def graphe_live(C0, s):
 
     print("Mesure en cours... Appuie sur 'q' dans la fenêtre du graphe pour arrêter.")
 
+    t0 = time.time()  # référence de départ pour l'axe temporel
+
     while not stop:
         s.flushInput()
         time.sleep(0.5)  # ~ 2 mesures / seconde
@@ -149,20 +171,25 @@ def graphe_live(C0, s):
             v_cal = (2 - float(a[0])) * 1000 + C0
             print(v_cal)
 
+            t_actuel = time.time() - t0
+
             T.append(float(a[1]))
+            t_T.append(t_actuel)
+
             if 10 < v_cal < 700:
                 V.append(v_cal)
+                t_V.append(t_actuel)
 
             ax1.clear()
-            ax1.plot(V, color='blue')
+            ax1.plot(t_V, V, color='blue')
             ax1.set_title("Tension")
-            ax1.set_xlabel("Temps d'acquisition (u.a.)")
+            ax1.set_xlabel("Temps (s)")
             ax1.set_ylabel("Tension calibrée (mV)")
 
             ax2.clear()
-            ax2.plot(T, color='red')
+            ax2.plot(t_T, T, color='red')
             ax2.set_title("Température")
-            ax2.set_xlabel("Temps d'acquisition (u.a.)")
+            ax2.set_xlabel("Temps (s)")
             ax2.set_ylabel("Température (°C)")
 
             plt.tight_layout()
@@ -174,7 +201,7 @@ def graphe_live(C0, s):
     plt.ioff()   # ← stop le mode interactif
     plt.close(fig)
 
-    return T, V, fig
+    return T, V, t_T, t_V, fig
 
 def informations_1er_ordre (T,V,a) :
     """_summary_
@@ -193,37 +220,6 @@ def informations_1er_ordre (T,V,a) :
     print(f'moyenne Température (°C)={moy_T}')
     return moy_T , moy_V, sigma 
 
-
-
-def data_live(s): 
-    """_summary_
-    Acquiert des données en continu depuis le port série jusqu'à ce que l'utilisateur
-    appuie sur la touche 'q'. À chaque itération, lit une ligne du port série, la décode
-    et en extrait la température (indice 1) et la tension (indice 0) séparées par une virgule.
-    Affiche chaque mesure en temps d'acquisition dans la console.
-
-    Returns:
-        [list[float], list[float]]: 
-            - T : liste des températures mesurées (en °C).
-            - V : liste des tensions mesurées (en V).
-    """
-    T=[]
-    V=[]
-    plt.ion()   #plt.subplots() crée la fenêtre graphique et retourne deux objets : ax = axe, labels... et fig = fênetre entière
-    fig, ax = plt.subplots()
-    print('En cours... appuyez sur q pour arreter')
-    while not keyboard.is_pressed ('q') :
-        s.flushInput()
-        time.sleep(0.1)
-        try:
-            line = s.readline().decode()
-            a = line.strip("\r\n").split(",")
-            T.append(float(a[1])) #1 a [1]valeurs de la liste et a[0]
-            V.append(float(a[0]))
-            print(f"{float(a[1]):.2f},{float(a[0]):.2f}") 
-        except:
-            print("problème de lecture de données")
-    return T,V,fig
 
 def enregistrement_csv (T,V_real,moy = None,sigma=None) :
     """_summary_
@@ -274,6 +270,33 @@ Returns:
     figure.savefig(chemin,bbox_inches='tight')
     return 'Le fichier png a bien été enregistré.'
 
+#derniere option, tracer un graphique à partir d'un fichier csv : 
+def graphe_csv(chemin) :
+    """_summary_
+    Lit un fichier CSV contenant des données de température et de potentiel, puis
+    trace un graphique de T et V en fonction du nombre de mesures. 
+    Le fichier CSV doit être horodaté et contenir deux colonnes : température (°C) et potentiel (mV).
+
+    """
+    nom = input ("Entrez le nom du fichier csv (avec l'extension .csv) : ")
+    BASE = Path(__file__).parent.parent
+    chemin = BASE/"Data"/'data_(T,V)'/nom
+    data = np.loadtxt(chemin, delimiter=',', skiprows=1)
+    T = data[:,0]
+    V = data[:,1]
+    fig, (ax1 , ax2)  = plt.subplots(1,2)
+    ax1.plot(V,'o', color='red')
+    ax1.set_xlabel("Nombre de mesure")
+    ax1.set_ylabel("Potentiel réel (mV)")
+    ax2.plot(T,'o', color='blue')
+    ax2.set_xlabel("Nombre de mesure")
+    ax2.set_ylabel("Température (°C)")
+    plt.show()
+    return 'Le graphique a bien été tracé à partir du fichier csv.'
 # portIN,s = connexion_port(br= 115200 , portIN ='')
 # C0 = 0
 # graphe_live(C0,s)
+
+def t_attente (nb=None):
+    for i in range (nb):
+        print(f"Mesures faite à {nb/100}" )

@@ -23,7 +23,9 @@ Que voulez vous faire ?
 3) Mesure en continu
 ************************************
 4) Réinitialiser la calibration
-5) Quitter
+************************************
+5) Tracer un graphique à partir d'un fichier csv
+6) Quitter
 """
 
 
@@ -151,6 +153,8 @@ while continuer :
     C0 = 0
     print("Calibration réinitialisée (à 0)")
    elif reponse == '5':
+        mes.graphe_csv(chemin)
+   elif reponse == '6':
         print("Merci d'avoir utilisé ce programme, à bientôt !")
         continuer = False
 
