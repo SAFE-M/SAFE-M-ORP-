@@ -16,7 +16,7 @@ M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I O
 SAFE-M-ORP, une sonde ORP low cost pour l'enseignement [Computer software] https://github.com/SAFE-M/SAFE-M-ORP-.git .
 
 ## L'appareil <a class="anchor" id="appareil"></a>
-![Montage Arduino](./../documentation/photo_boitier.png)
+![Montage Arduino](documentation/photo_boitier.png)
 
 Le principe de l'appareil reprend les spécification de ***DFROBOT*** https://wiki.dfrobot.com/PH_meter%28SKU__SEN0161%29 .
 Deux ajouts sont effectués afin d'améliorer la précision:
@@ -27,7 +27,7 @@ Deux ajouts sont effectués afin d'améliorer la précision:
 Les sondes ORP sont reliées à l'arduino via un amplificateur de signal muni d'un portard permettant de régler la gamme de tension.
 
 Le montage est effectué au moyen d'une carte PCB dessinée avec Fritzing 
-![Montage Arduino](./../documentation/montageArduino.jpg)
+![Montage Arduino](documentation/montageArduino.jpg)
 
 ## Script Arduino <a class="anchor" id="arduino-scripts"></a>
 
