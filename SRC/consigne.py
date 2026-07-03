@@ -91,7 +91,7 @@ while continuer :
         
         elif reponse_calibration == '2':
             nb_mesures = int(input("Combien de mesures voulez-vous faire pour la calibration à un étalon ? (en entier)"))
-            _,V= mes.data(s,N=nb_mesures)
+            _,V,_= mes.data(s,N=nb_mesures)
             C0 = cal.calibration_etalon(V)
             print("Voici le terme correctif (offset): %4.2f" % (C0))
         
@@ -115,12 +115,12 @@ while continuer :
                Génère un fichier .csv horodaté contenant  la liste V_real et/ ou T 
                Le nom du fichier suit le format : 'Mesure Voltage et/ou Température JJ Mois, HHhMM.csv' """
        print('Attention, le dernier calibrage enregistré sera utilisé et les mesures vont commencé')
-       T,V = mes.data(s)
+       T,V,t_temps= mes.data(s)
        V_real = cal.V_real_f(V,C0)
        reponse_mesure = input(menu_mesure)
 
        if reponse_mesure == "1" :
-           fig = mes.Graphe_T_V(T,V_real)
+           fig = mes.Graphe_T_V(T,V_real,t_temps)
            reponse_mesure2 = input(menu_mesure2) 
 
            if reponse_mesure2 == '1':
@@ -140,7 +140,7 @@ while continuer :
    elif reponse == '3':
        print(indication_live)
        time.sleep(2)
-       T ,V,fig = mes.graphe_live(C0,s)
+       T ,V,t_T,t_V,fig = mes.graphe_live(C0,s)
        
        reponse_live = input(menu_live) 
        if reponse_live =='1':

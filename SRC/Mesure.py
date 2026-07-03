@@ -169,16 +169,15 @@ def graphe_live(C0, s):
             a = line.strip("\r\n").split(",")
 
             v_cal = (2 - float(a[0])) * 1000 + C0
-            print(v_cal)
+        
 
             t_actuel = time.time() - t0
 
             T.append(float(a[1]))
             t_T.append(t_actuel)
 
-            if 10 < v_cal < 700:
-                V.append(v_cal)
-                t_V.append(t_actuel)
+            V.append(v_cal)
+            t_V.append(t_actuel)
 
             ax1.clear()
             ax1.plot(t_V, V, color='blue')
@@ -297,6 +296,4 @@ def graphe_csv(chemin) :
 # C0 = 0
 # graphe_live(C0,s)
 
-def t_attente (nb=None):
-    for i in range (nb):
-        print(f"Mesures faite à {nb/100}" )
+
