@@ -31,6 +31,7 @@ Le montage est effectué au moyen d'une carte PCB dessinée avec Fritzing
 <p align="center">
   <img src="documentation/montageArduino.jpg" alt="Montage Arduino" width="300">
 </p>
+
 ## Script Arduino <a class="anchor" id="arduino-scripts"></a>
 
 Le script arduino est simple et consiste uniquement à demander à l'appareil d'effectuer des mesures à une fréquence de 10Hz et les envoyer sur le port série. les mesures sont, d'une part, une mesure du voltage renvoyé par l'éléctrode Ag/AgCl de la sonde et d'autre part une mesure de température renvoyée par la sonde PT100
