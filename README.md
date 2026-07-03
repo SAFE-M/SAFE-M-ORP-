@@ -27,7 +27,7 @@ Deux ajouts sont effectués afin d'améliorer la précision:
 Les sondes ORP sont reliées à l'arduino via un amplificateur de signal muni d'un portard permettant de régler la gamme de tension.
 
 Le montage est effectué au moyen d'une carte PCB dessinée avec Fritzing 
-![Montage Arduino](./../documentation/montageArduino.png)
+![Montage Arduino](./../documentation/montageArduino.jpg)
 
 ## Script Arduino <a class="anchor" id="arduino-scripts"></a>
 
@@ -60,5 +60,5 @@ Pour des raisons de simplicité le script fonctionne en mode terminal, pas d'int
 6) Quitter
 
 L'étudiant doit taper le chiffre de l'action voulu dans le terminal pour l'exécuter.
-Le programme est fait de sorte à ne pas vous piégez, si vous ne voyait pas d'option pour enregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposé par la suite.
+Le programme est fait de sorte à ne pas vous piégez, si vous ne voyait pas d'option pour enregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
 La compensation de température est, pour l'heure, appliquée à la calibration uniquement.
