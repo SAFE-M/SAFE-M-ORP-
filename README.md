@@ -11,14 +11,12 @@
 * Il résulte d'un travail collectif effectué par des étudiants de Licence 3 de l'Institut de physique du globe de Paris.
 * Il est distribué sous la licence créative common ***CC-by-SA 4.0***
 * Pour le citer:
-M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura (2026).\\
-\\
-SAFE-M-ORP Une sonde ORP low cost pour l'enseignement [Computer software]. https://github.com/fmetivier/pH_meter_V2.0
+M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura (2026).
+
+SAFE-M-ORP, une sonde ORP low cost pour l'enseignement [Computer software] https://github.com/SAFE-M/SAFE-M-ORP-.git .
 
 ## L'appareil <a class="anchor" id="appareil"></a>
-
-
-![](./src/pH_meter_V2.01/Docs/compo.png)
+![Montage Arduino](./../documentation/photo_boitier.png)
 
 Le principe de l'appareil reprend les spécification de ***DFROBOT*** https://wiki.dfrobot.com/PH_meter%28SKU__SEN0161%29 .
 Deux ajouts sont effectués afin d'améliorer la précision:

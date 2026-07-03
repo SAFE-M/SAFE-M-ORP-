@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import datetime
 import locale
 import calibration as cal
-import keyboard
 from pathlib import Path
 import serial
 import time
