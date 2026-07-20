@@ -11,7 +11,7 @@
 * Il résulte d'un travail collectif effectué par des étudiants de Licence 3 de l'Institut de physique du globe de Paris.
 * Il est distribué sous la licence créative common ***CC-by-SA 4.0***
 * Pour le citer:
-M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura (2026).
+M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura  et sous la direction de F.Métivier (2026).
 
 → Ce dépôt contient également le [manuel d'utilisation de l'appareil](documentation/manuel/manuel.pdf) ainsi que [le rapport de stage](documentation/Rapport_SAFE-M_ORP.pdf) rédigé dans le cadre de ce projet.
 
