@@ -13,7 +13,7 @@
 * Pour le citer:
 M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura (2026).
 
-=> Ce dépôt contient également le [manuel d'utilisation de l'appareil](documentation\manuel\manuel.pdf) ainsi que [le rapport de stage](documentation\Rapport_SAFE-M_ORP.pdf) rédigé dans le cadre de ce projet.
+→ Ce dépôt contient également le [manuel d'utilisation de l'appareil](documentation\manuel\manuel.pdf) ainsi que [le rapport de stage](documentation\Rapport_SAFE-M_ORP.pdf) rédigé dans le cadre de ce projet.
 
 SAFE-M-ORP, une sonde ORP low cost pour l'enseignement [Computer software] https://github.com/SAFE-M/SAFE-M-ORP-.git .
 
