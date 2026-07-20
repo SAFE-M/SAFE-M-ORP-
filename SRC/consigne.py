@@ -70,7 +70,7 @@ Que souhaitez-vous faire de ce graphiques ?
 """
 indication_live = """
 /!\\ Attention, le dernier calibrage enregistré sera utilisé.
-Si vous souhaitez sauvegarder les données veillez à noter apartir de quel nombre de mesure (U.A) le potentiel se stabilise (en entier) ')
+Si vous souhaitez sauvegarder les données veillez à noter apartir temps le potentiel se stabilise (en entier) ')
 Les mesures commencent, pour arreter appuyez sur q
 """
 try :

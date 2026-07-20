@@ -49,7 +49,7 @@
        \hypersetup{pdfauthor={\@author}, pdftitle={\@title}}%
     \endgroup
   \begin{flushright}
-    \sphinxlogo
+    \sphinxlogo{\includegraphics[width=0.25\textwidth]{figures/LOGO-SAFE-M.png}}\\[1em]
     \py@HeaderFamily
     {\Huge \@title }\par
     {\itshape\large \py@release \releaseinfo}\par

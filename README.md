@@ -13,6 +13,8 @@
 * Pour le citer:
 M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura (2026).
 
+=> Ce dépôt contient également le [manuel d'utilisation de l'appareil](documentation\manuel\manuel.pdf) ainsi que [le rapport de stage](documentation\Rapport_SAFE-M_ORP.pdf) rédigé dans le cadre de ce projet.
+
 SAFE-M-ORP, une sonde ORP low cost pour l'enseignement [Computer software] https://github.com/SAFE-M/SAFE-M-ORP-.git .
 
 ## L'appareil <a class="anchor" id="appareil"></a>
@@ -63,5 +65,5 @@ Pour des raisons de simplicité le script fonctionne en mode terminal, pas d'int
 6) Quitter
 
 L'étudiant doit taper le chiffre de l'action voulu dans le terminal pour l'exécuter.
-Le programme est fait de sorte à ne pas vous piégez, si vous ne voyait pas d'option pour enregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
+Le programme est fait de sorte à ne pas vous piégez, si vous ne voyez pas d'option pour enregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
 La compensation de température est, pour l'heure, appliquée à la calibration uniquement.
