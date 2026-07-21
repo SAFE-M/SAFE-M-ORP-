@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.7.1)  20 JUL 2026 17:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.5) (preloaded format=pdflatex 2026.7.1)  21 JUL 2026 11:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1495,15 +1495,6 @@ Overfull \hbox (155.88704pt too wide) in paragraph at lines 289--289
  []
 
 
-LaTeX Warning: Reference `liengithub' on page 8 undefined on input line 333.
-
-
-LaTeX Warning: Reference `ex.save' on page 8 undefined on input line 337.
-
-
-LaTeX Warning: Reference `code.cal2' on page 8 undefined on input line 338.
-
-
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
 (fancyhdr)                \setlength{\headheight}{13.59999pt}.
@@ -1512,9 +1503,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [8]
 
-LaTeX Warning: Reference `section 2.2' on page 9 undefined on input line 340.
-
-
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
 (fancyhdr)                \setlength{\headheight}{13.59999pt}.
@@ -1522,32 +1510,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [9]
-runsystem(latexminted cleantemp  --timestamp 20260720170547 96917805FD060E3766A9A1B834639D35)...disabled (restricted).
+runsystem(latexminted cleantemp  --timestamp 20260721110718 96917805FD060E3766A9A1B834639D35)...disabled (restricted).
 
  (manuel.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-05-26>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `manuel.out' has not changed.
 (rerunfilecheck)             Checksum: 60A810D66F6C00621F267545936176D8;2297.
  ) 
 Here is how much of TeX's memory you used:
- 37155 strings out of 467509
- 786425 string characters out of 5408781
+ 37176 strings out of 467509
+ 786674 string characters out of 5408781
  1368670 words of memory out of 5000000
- 65773 multiletter control sequences out of 15000+600000
+ 65793 multiletter control sequences out of 15000+600000
  643568 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,12n,108p,550b,812s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 94i,12n,108p,550b,704s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsl1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\matma\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/matma/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on manuel.pdf (9 pages, 2150981 bytes).
+Output written on manuel.pdf (9 pages, 2154935 bytes).
 PDF statistics:
- 667 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
+ 681 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
  286 words of extra memory for PDF output out of 10000 (max. 10000000)
 

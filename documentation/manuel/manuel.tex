@@ -307,7 +307,7 @@ que l’instrument ait été étalonné au préalable. Si les mesures sont effec
 successifs, il est recommandé de rincer l’électrode entre chaque échantillon, afin de ne pas contaminer
 les échantillons entre-eux.
 \end{tcolorbox}
-
+\vspace{-0.5 cm}
 \section{Annexes}
 \subsection{Organisation du code}
 \label{code}
@@ -320,6 +320,13 @@ les échantillons entre-eux.
 .3 data\_calibration.
 .2 documentation.
 .3 Documentation.md.
+.3 Rapport\_SAFE-M-ORP.pdf.
+.3 manuel.
+.4 figures
+.4 manuel.tex.
+.4 manuel.pdf.
+.3 \_build.
+.4 html.
 .2 SRC.
 .3 \_\_pycache\_\_.
 .3 arduino\_redox.
@@ -327,22 +334,32 @@ les échantillons entre-eux.
 .3 consigne.py.
 .3 Mesure.py.
 .2 .gitattributes.
+.2 AUTHORS.md.
+.2 LICENCE.rst.
 .2 README.md.
 }
 
-Le projet SAFE-M-ORP (\ref{liengithub}) est constitué en deux blocs principaux : 
+Le projet SAFE-M-ORP est constitué en trois blocs principaux : 
 \begin{enumerate}
     \item Le dossier Source (\textit{SRC}) où l'on retrouvera : 
     \begin{itemize}
-        \item \textit{Mesure.py} qui contient toutes les fonctions pour permettre d'effectuer les mesures, les graphiques, les enregistrements (voir \ref{ex.save}) et la connexion au port Arduino.
-        \item \textit{calibration.py} qui contient les fonctions permettant un étalonnage d'usine, à 1 et 2 étalons (voir \ref{code.cal2}) ainsi que les fonctions pour enregistrer ces calibrations. 
+        \item \textit{Mesure.py} qui contient toutes les fonctions pour permettre d'effectuer les mesures, les graphiques, les enregistrements et la connexion au port Arduino.
+        \item \textit{calibration.py} qui contient les fonctions permettant un étalonnage d'usine, à 1 et 2 étalons ainsi que les fonctions pour enregistrer ces calibrations. 
         \item \textit{consigne.py} qui contient le menu interactif avec l'utilisateur lui permettant de choisir ce qu'il veut faire. 
-        \item \textit{arduino\_redox.py} qui contient le code C/C++ à téléverser sur les cartes Arduino Uno (cf \ref{section 2.2}) pour  
+        \item \textit{arduino\_redox.py} qui contient le code C/C++ à téléverser sur les cartes Arduino Uno pour  
         l'acquisition des mesures. 
         \item \textit{\_\_pycache\_\_} est un dossier généré automatiquement par Python qui contient les fichiers compilés (.pyc) des scripts.
     \end{itemize}
 
-    \item Le dossier Data qui contient les données des mesures (et calibration) sous la forme fichier \textit{.csv} ou des graphiques sous la forme \textit{.png}. 
+    \item Le dossier documentation :
+    \begin{itemize}
+        \item \textit{manuel} ou l'on y retrouve le manuel d'utilisation (\textit{pdf}) avec son document \textit{tex} et les figures nécessaires.
+        \item \textit{Rapport\_SAFE-M-ORP} qui est un document détaillant le principe d'utilisation de la sonde ainsi que ses limitations.
+        \item \textit{\_build} qui correspond aux outils sphinx seulement développer en \textit{html}
+        \item \textit{Documentation.md} qui décrit le fonctionnement du programme.
+    \end{itemize}
+
+    \item Et le dossier Data qui contient les données des mesures (et calibration) sous la forme fichier \textit{.csv} ou des graphiques sous la forme \textit{.png}. 
     Les fichiers \textit{.csv} sont principalement organisés comme ci-dessous : 
 \end{enumerate}
 \begin{verbatim}
