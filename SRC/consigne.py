@@ -24,7 +24,7 @@ Que voulez vous faire ?
 4) Réinitialiser la calibration
 ************************************
 5) Tracer un graphique à partir d'un fichier csv
-6) Quitter
+6) Quitter le programme
 """
 
 
