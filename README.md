@@ -1,4 +1,4 @@
-# SAFE-M-PH: un pH-mètre low cost pour l'enseignement
+# SAFE-M-ORP: une sonde low cost de mesure du potentiel d'oxydoréduction pour l'enseignement
 
 * [Introduction](##introduction)
 * [L'appareil](##appareil)
@@ -13,21 +13,19 @@
 * Pour le citer:
 M. Velasco, P. Martin, A. Levasseur, A. Boubakour, H. Ast, R. Godard-Galves, I Or.lovic, S. Maurice, I. Piketty, L. Avney-On, I. Ferrand, A.Faura  et sous la direction de F.Métivier (2026).
 
-→ Ce dépôt contient également le [manuel d'utilisation de l'appareil](documentation/manuel/manuel.pdf) ainsi que [le rapport de stage](documentation/Rapport_SAFE-M_ORP.pdf) rédigé dans le cadre de ce projet.
-
 SAFE-M-ORP, une sonde ORP low cost pour l'enseignement [Computer software] https://github.com/SAFE-M/SAFE-M-ORP-.git .
 
 ## L'appareil <a class="anchor" id="appareil"></a>
 <p align="center">
   <img src="documentation/photo_boitier.png " alt="Montage Arduino" width="300">
 </p>
-Le principe de l'appareil reprend les spécification de ***DFROBOT*** https://wiki.dfrobot.com/PH_meter%28SKU__SEN0161%29 .
+Le principe de l'appareil reprend les spécifications de ***DFROBOT*** https://wiki.dfrobot.com/PH_meter%28SKU__SEN0161%29 .
 Deux ajouts sont effectués afin d'améliorer la précision:
 
 * une sonde de température PT100 a été ajoutée afin de corriger, partiellement, de l'effet de la température;
 * la calibration de la sonde ORP est effectuée et contrôlée par le programme Python.
 
-Les sondes ORP sont reliées à l'arduino via un amplificateur de signal muni d'un portard permettant de régler la gamme de tension.
+Les sondes ORP sont reliées à l'arduino via un amplificateur de signal muni d'un potard permettant de régler la gamme de tension.
 
 Le montage est effectué au moyen d'une carte PCB dessinée avec Fritzing 
 <p align="center">
@@ -36,11 +34,11 @@ Le montage est effectué au moyen d'une carte PCB dessinée avec Fritzing
 
 ## Script Arduino <a class="anchor" id="arduino-scripts"></a>
 
-Le script arduino est simple et consiste uniquement à demander à l'appareil d'effectuer des mesures à une fréquence de 10Hz et les envoyer sur le port série. les mesures sont, d'une part, une mesure du voltage renvoyé par l'éléctrode Ag/AgCl de la sonde et d'autre part une mesure de température renvoyée par la sonde PT100
+Le script arduino consiste à demander à l'appareil d'effectuer des mesures à une fréquence de 10Hz et les envoyer sur le port série. Les mesures sont, d'une part, une mesure du voltage renvoyée par l'éléctrode Ag/AgCl de la sonde et d'autre part une mesure de température renvoyée par la sonde PT100
 
 ## Programme Python <a class="anchor" id="python-and-sql"></a>
 
-La récupération, au moyen du port série, et l'analyse des données est effectuée au moyen d'un programme python. Pour fonctionner, le programme nécessite, en plus des librairies standard l'installation des librairies suivantes: numpy, matplotlib.pyplot, serial et threading. Pour les installer : 
+La récupération, au moyen du port série, et l'analyse des données sont effectuées au moyen d'un programme python. Pour fonctionner, le programme nécessite, en plus des librairies standard l'installation des librairies suivantes: numpy, matplotlib.pyplot, serial et threading. Pour les installer depuis un terminal, exécuter:
 ```bash
 pip install numpy matplotlib keyboard pyserial threading
 ```
@@ -50,7 +48,7 @@ sur **windows** :
 sur **linux** :
  taper `python3 consigne.py` afin de lancer le programme. 
 
-Ensuite, l'utilisateur peut lancer le programme en ouvrant le fichier source (.../SAFE-M-ORP/SRC) dans le terminal (de l'ordinateur). 
+L'utilisateur peut ensuite lancer le programme en ouvrant le fichier source (.../SAFE-M-ORP/SRC) dans le terminal (de l'ordinateur). 
 Il peut également chercher le fichier dans le terminal en utilisant le chemin du fichier SRC et taper : 
 ```bash
 cd "chemin/SAFE-M/ORP" #cd = cd = changes directory
@@ -64,6 +62,7 @@ Pour des raisons de simplicité le script fonctionne en mode terminal, pas d'int
 5) Tracer un graphique à partir d'un fichier csv
 6) Quitter
 
-L'étudiant doit taper le chiffre de l'action voulu dans le terminal pour l'exécuter.
-Le programme est fait de sorte à ne pas vous piégez, si vous ne voyez pas d'option pour enregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
-La compensation de température est, pour l'heure, appliquée à la calibration uniquement.
+L'étudiant doit saisir le chiffre de l'action voulu dans le terminal afin de déclencher les actions correspondantes.
+Le programme est fait de sorte à ne pas piéger l'utilisateur.
+Ainsi, si on ne voit pas d'option pour entregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
+Une document détaillant le principe d'utilisation de la sonde ainsi que ses limitations se trouve en [documentation](documentation/Rapport_SAFE-M_ORP.pdf). Un [manuel] (documentation/manuel/manuel.pdf) d'utilisation est aussi disponible dans la documentation.
