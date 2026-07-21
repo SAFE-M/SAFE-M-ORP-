@@ -65,4 +65,5 @@ Pour des raisons de simplicité le script fonctionne en mode terminal, pas d'int
 L'étudiant doit saisir le chiffre de l'action voulu dans le terminal afin de déclencher les actions correspondantes.
 Le programme est fait de sorte à ne pas piéger l'utilisateur.
 Ainsi, si on ne voit pas d'option pour entregistrer vos données au moment de faire une action, elle est soit faite automatiquement soit sera proposée par la suite.
-Une document détaillant le principe d'utilisation de la sonde ainsi que ses limitations se trouve en [documentation](documentation/Rapport_SAFE-M_ORP.pdf). Un [manuel] (documentation/manuel/manuel.pdf) d'utilisation est aussi disponible dans la documentation.
+Une document détaillant le principe d'utilisation de la sonde ainsi que ses limitations se trouve en [documentation](documentation/Rapport_SAFE-M_ORP.pdf). Un [manuel](documentation/manuel/manuel.pdf) d'utilisation est aussi disponible dans la documentation. 
+
