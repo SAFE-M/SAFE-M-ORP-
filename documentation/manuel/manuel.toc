@@ -12,3 +12,4 @@
 \contentsline {section}{\numberline {4}Mesures}{7}{section.4}%
 \contentsline {section}{\numberline {5}Annexes}{8}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Organisation du code}{8}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Montage de l'appareil}{10}{section.6}%

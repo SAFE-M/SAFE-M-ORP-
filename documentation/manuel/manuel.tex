@@ -10,6 +10,7 @@
 \usepackage{listings}
 \usepackage[most]{tcolorbox}
 \usepackage[x11names]{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{enumitem}
 \setlist[itemize]{label=\color{ipgpred}$\blacktriangleright$}
 \usepackage{booktabs}
@@ -215,7 +216,7 @@ Essayez de rebrancher les ports ou de l'indiquer manuellement.
 Pour une meilleure exactitude, un étalonnage fréquent de l’instrument est recommandé. Un étalonnage
 est indispensable dans les cas suivants :
 \begin{itemize}
- \item L’électrode a été remplacée
+ \item L’électrode (sonde ORP) ou le boîtier a été remplacée
  \item Au moins une fois par mois
  \item  Après avoir mesuré des produits chimiques agressifs
  \item  Lorsqu’une grande exactitude est requise
@@ -296,7 +297,7 @@ Ainsi, si vous avez fait mesuré pendant 200s  et que la mesure de la sonde est 
 Si appuyer sur q ne ferme pas le graphique, cliquez sur le graphique et réappuyez sur q ( à plusieurs fois)
 \end{tcolorbox}
  La méthode (b) demande moin de ressource pour l'ordinateur, plus pratique sur des PC peu puissants.
-Après avoir choisi un chiffre de mesure (100 min conseillé) pour acquérir les données, vous pourrez sauvegardez vos données ou tracé un graphique, si vous 
+Après avoir choisi un chiffre de mesure (100 minimum conseillé) pour acquérir les données, vous pourrez sauvegardez vos données ou tracé un graphique, si vous 
 tracez un graphique vous pourrez enregistrer les données par la suite aussi.
 
 
@@ -370,7 +371,42 @@ Le projet SAFE-M-ORP est constitué en trois blocs principaux :
 21.61,250.00
 21.61,2
 \end{verbatim}
+\newpage
+\section{Montage de l'appareil}
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/montageArduino.pdf}
+        \caption{}
+        \label{fig:1a}
+    \end{subfigure}
+    \hspace{0.5 cm}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \begin{tabular}{c|c}
+            \hline
+            \rowcolor{ipgpred}
+            \textbf{Port} & \textbf{Uno} \\
+            \hline
+            \hline
+            SDI & 11 \\
+            SDO & 12 \\
+            CLK & 13 \\
+            CS  & 10 \\
+            \hline
+        \end{tabular}
+        \caption{}
+        \label{fig:1b}
+    \end{subfigure}
+    \caption{(a) Montage Manuel de l'Arduino, (b) Connexions des ports analogiques à l'interface MAX31865 d'Adafruit.}
+\end{figure}
 
 
+\begin{tcolorbox}[colback=gray!20, colframe=gray]
+    {\Large\textcolor{red}{Important}\\}
+Pour pouvoir emboîter correctement la carte \textit{fritzing} sur la carte Arduino Uno, 
+il faut veiller à souder par dessus celle ci, c'est à dire sur la même face que l'interface Adafruit.
+\end{tcolorbox}
 
-\end{document}  
+\end{document}
