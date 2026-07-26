@@ -127,10 +127,10 @@ while continuer :
                mes.enregistrement_csv (T,V_real)
 
            elif reponse_mesure2 == '2':
-               mes.enregistrement_png(fig)
+               mes.enregistrement_pdf(fig)
            elif reponse_mesure2 == '3':
                mes.enregistrement_csv(T,V_real)
-               mes.enregistrement_png(fig)
+               mes.enregistrement_pdf(fig)
                
 
      
@@ -147,7 +147,7 @@ while continuer :
         a = int(input('A partir de quel nombre de mesure (U.A) le potentiel se stabilise (en entier)?'))
         moy_T, moy_V, sigma = mes.informations_1er_ordre(T,V,a)
         mes.enregistrement_csv(T,V,moy=moy_V,sigma=sigma)
-        mes.enregistrement_png(fig)
+        mes.enregistrement_pdf(fig)
    elif reponse == '4':
     C0 = 0
     print("Calibration réinitialisée (à 0)")

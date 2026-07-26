@@ -267,7 +267,7 @@ Returns:
     nom_fichier = now.strftime("Graphique Température et Potentiel %d %B, %Hh%M.pdf")
     chemin = BASE/"Data"/'data_figures'/'data_figures_mesures'/nom_fichier      
     figure.savefig(chemin,bbox_inches='tight')
-    return 'Le fichier png a bien été enregistré.'
+    return 'Le fichier pdf a bien été enregistré.'
 
 #derniere option, tracer un graphique à partir d'un fichier csv : 
 def graphe_csv(chemin) :
