@@ -152,7 +152,7 @@ while continuer :
     C0 = 0
     print("Calibration réinitialisée (à 0)")
    elif reponse == '5':
-        mes.graphe_csv(chemin)
+        mes.graphe_csv()
    elif reponse == '6':
         print("Merci d'avoir utilisé ce programme, à bientôt !")
         continuer = False
