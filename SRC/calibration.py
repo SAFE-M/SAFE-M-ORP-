@@ -3,7 +3,6 @@ import numpy as np
 import datetime
 import locale
 import calibration as cal
-import keyboard
 from pathlib import Path
 import serial
 import time
@@ -178,13 +177,13 @@ Returns:
         E1 = float(input('Potentiel de la solution étalon 1 (mV) : '))
         input('Placer votre sonde dans la solution étalon 1, quand vous êtes prêt, écrivez OK ===>')
         print('Début des mesures...')
-        T, V1 = mes.data(s, N=100)
+        T, V1, _ = mes.data(s, N=10)
         print('Fin des mesures')
     if E2 is None and V2 is None:
         E2 = float(input('Potentiel de la solution étalon 2 (mV) : '))
         input('Nettoyer et sécher votre sonde, puis la placer dans la solution étalon 2 , quand vous êtes prêt, écrivez OK ===>')
         print('Début des mesures...')
-        T, V2 = mes.data(s, N=100)
+        T, V2,_ = mes.data(s, N=10)
         print('Fin des mesures')
 
     V1_moy = np.mean(V1)
