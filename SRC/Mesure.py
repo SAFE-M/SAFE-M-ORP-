@@ -267,33 +267,32 @@ Returns:
     nom_fichier = now.strftime("Graphique Température et Potentiel %d %B, %Hh%M.pdf")
     chemin = BASE/"Data"/'data_figures'/'data_figures_mesures'/nom_fichier      
     figure.savefig(chemin,bbox_inches='tight')
-    return 'Le fichier png a bien été enregistré.'
+    return 'Le fichier pdf a bien été enregistré.'
 
 #derniere option, tracer un graphique à partir d'un fichier csv : 
-def graphe_csv(chemin) :
-    """_summary_
-    Lit un fichier CSV contenant des données de température et de potentiel, puis
-    trace un graphique de T et V en fonction du nombre de mesures. 
-    Le fichier CSV doit être horodaté et contenir deux colonnes : température (°C) et potentiel (mV).
-
+def graphe_csv():
     """
-    nom = input ("Entrez le nom du fichier csv (avec l'extension .csv) : ")
+    Lit un fichier CSV contenant des données de température et de potentiel, puis
+    trace un graphique de T et V en fonction du nombre de mesures.
+    Le fichier CSV doit être horodaté et contenir deux colonnes : température (°C) et potentiel (mV).
+    """
+    nom = input("Entrez le nom du fichier csv (avec l'extension .csv ; ex Mesure et ... 15 juin, 18H00.csv): ")
+    nom = nom.strip().strip('\'"')
+
     BASE = Path(__file__).parent.parent
-    chemin = BASE/"Data"/'data_(T,V)'/nom
-    data = np.loadtxt(chemin, delimiter=',', skiprows=1)
-    T = data[:,0]
-    V = data[:,1]
-    fig, (ax1 , ax2)  = plt.subplots(1,2)
-    ax1.plot(V,'o', color='red')
+    chemin = BASE / "Data" / "data_(T,V)" / nom
+
+    data = np.loadtxt(chemin, delimiter=',', skiprows=1, encoding='latin-1')
+    T = data[:, 0]
+    V = data[:, 1]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2)
+    ax1.plot(V, 'o', color='red')
     ax1.set_xlabel("Nombre de mesure")
     ax1.set_ylabel("Potentiel réel (mV)")
-    ax2.plot(T,'o', color='blue')
+    ax2.plot(T, 'o', color='blue')
     ax2.set_xlabel("Nombre de mesure")
     ax2.set_ylabel("Température (°C)")
     plt.show()
+
     return 'Le graphique a bien été tracé à partir du fichier csv.'
-# portIN,s = connexion_port(br= 115200 , portIN ='')
-# C0 = 0
-# graphe_live(C0,s)
-
-

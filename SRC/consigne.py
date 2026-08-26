@@ -96,7 +96,7 @@ while continuer :
             print("Voici le terme correctif (offset): %4.2f" % (C0))
         
         elif reponse_calibration == '3' :
-            C0,V1_real, V2_real, tendance,r_squared,E1,E2 = cal.calibration_2_etalons(s, E1=None,E2=None, V1=None, V2=None)
+            a, C0, E1, E2, V1_real, V2_real, tendance = cal.calibration_2_etalons(s, E1=None, E2=None, V1=None, V2=None)
             fig = cal.graphe_cal2(tendance,a, C0, E1, E2, V1_real,V2_real)
             print("Voici le terme correctif : %4.2f" % (C0))
         if reponse_calibration == '2' or reponse_calibration =='3' :
@@ -127,10 +127,10 @@ while continuer :
                mes.enregistrement_csv (T,V_real)
 
            elif reponse_mesure2 == '2':
-               mes.enregistrement_png(fig)
+               mes.enregistrement_pdf(fig)
            elif reponse_mesure2 == '3':
                mes.enregistrement_csv(T,V_real)
-               mes.enregistrement_png(fig)
+               mes.enregistrement_pdf(fig)
                
 
      
@@ -144,15 +144,15 @@ while continuer :
        
        reponse_live = input(menu_live) 
        if reponse_live =='1':
-        a = int(input('A partir de quel nombre de mesure (U.A) le potentiel se stabilise (en entier)?'))
+        a = int(input('A partir de quel temps voulez vous enregistrez (U.A) le potentiel se stabilise (en entier)?'))
         moy_T, moy_V, sigma = mes.informations_1er_ordre(T,V,a)
         mes.enregistrement_csv(T,V,moy=moy_V,sigma=sigma)
-        mes.enregistrement_png(fig)
+        mes.enregistrement_pdf(fig)
    elif reponse == '4':
     C0 = 0
     print("Calibration réinitialisée (à 0)")
    elif reponse == '5':
-        mes.graphe_csv(chemin)
+        mes.graphe_csv()
    elif reponse == '6':
         print("Merci d'avoir utilisé ce programme, à bientôt !")
         continuer = False
