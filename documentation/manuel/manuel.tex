@@ -149,9 +149,22 @@ La figure \ref{boitier} montre le boîtier SAFE-M-ORP composé de :
 \end{figure}
 Le dossier est alors chargé sur l’ordinateur de manière locale. Une fois le dossier chargé vous pouvez
 vérifier le contenu du dossier en le comparant avec le dossier sur le site github. Le programme et toutes
-ses composantes sont alors chargées, vous pouvez dès lors utiliser les pH-mètres.
+ses composantes sont alors chargées, vous pouvez dès lors utiliser le potentiomètre.
 
 
+Une fois le dossier téléchargé, il est nécessaire d’installer les librairies Python nécessaires à l’exécution du programme.
+Pour cela, il faut ouvrir un terminal Ensuite, il faut exécuter la commande suivante :
+\begin{verbatim}
+    pip install numpy matplotlib pyserial
+\end{verbatim}
+
+\begin{tcolorbox}[colback=gray!20, colframe=gray]
+{\Large\textcolor{green}{Remarque}\\}
+Si la commande ne fonctionne pas, essayez avec :\\
+\begin{verbatim}
+pip install numpy matplotlib pyserial --break-system-packages
+\end{verbatim}
+\end{tcolorbox}
 
 \subsection{Matériel nécessaire à l'utilisation}
 
